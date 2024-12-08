@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>噹噹賣點餐系統</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<div class="page">
+		<div class="navbar_content">
+			<div class="navbar_homelogo">
+				<img src="/images/噹噹麥.svg" alt="噹噹麥 Logo" width="50px" height="50px" />
+			</div>
+			<div class="chart">
+				<div class="main">
+					<form method="get" action="/main_meal">
+						<input type="submit" value="主餐">
+					</form>
+				</div>
+				<div class="snack">
+					<form method="get" action="/dessert">
+						<input type="submit" value="點心">
+					</form>
+				</div>
+				<div class="drinks">
+					<form method="get" action="/drink">
+						<input type="submit" value="飲料">
+					</form>
+				</div>
+				<div class="shoppingCart">
+					<form method="get" action="/shoppingCart">
+						<input type="submit" value="購物車">
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="meal_content">
+			<div th:replace="${content}">
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>噹噹賣點餐系統</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+</head>
+
+<body>
+    <div class="home">
+        <div class="homelogo">
+            <img src="{{ asset('images/噹噹麥.svg') }}" alt="噹噹麥 Logo" width="50px" height="50px" />
+        </div>
+        <div class="button-group">
+            <div class="combo_meal">
+                <div class="btn_container">
+                    <form name="name" method="get" action="{{ url('/combo') }}">
+                        <input class="btn_comboMeal" type="submit" value="套餐" />
+                    </form>
+                </div>
+            </div>
+            <div class="a_la_carte">
+                <div class="btn_container">
+                    <form name="name" method="get" action="{{ url('/aLaCarte') }}">
+                        <input class="btn_aLaCarte" type="submit" value="單點" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

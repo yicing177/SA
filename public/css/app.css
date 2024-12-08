@@ -1,0 +1,51 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fffcec;
+    height: 100vh;
+}
+
+.homelogo {
+    margin-bottom: 20px;
+}
+.button-group{
+    display: flex;               /* 使用 Flexbox 排列按鈕 */
+    justify-content: center;     /* 水平置中容器內的內容 */
+    gap: 50px;                   /* 按鈕之間的間距，可以根據需要調整 */
+}
+.btn_container{
+    display: flex;
+    justify-content: center;  /* 水平居中 */
+    align-items: center;      /* 垂直居中 */
+}
+.btn_comboMeal, .btn_aLaCarte{
+    width: 400px;
+    height: 550px;
+    background-color: #ffcc00; /* 背景顏色 */
+    color: #333;              /* 字體顏色 */
+    border: none;             /* 移除邊框 */
+    border-radius: 8px;       /* 圓角 */
+    padding: 10px 20px;       /* 內邊距 */
+    font-size: 100px;          /* 字體大小 */
+    cursor: pointer;          /* 滑鼠指針樣式 */
+    transition: all 0.3s ease; /* 添加過渡效果 */
+
+    display: flex;             
+    justify-content: center;  /* 水平置中 */
+    align-items: center;      /* 垂直置中 */
+    text-align: center;
+
+    writing-mode: vertical-rl; /* 垂直排列文字，從右到左 */
+}
+.btn_comboMeal:hover, .btn_aLaCarte:hover{
+    background-color: #ffa500; /* 懸停時背景變深 */
+    color: #fff;
+}

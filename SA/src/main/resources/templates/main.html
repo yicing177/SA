@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="zh-TW">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>主餐</title>
+</head>
+
+<body>
+	<div th:fragment="content">
+		<div class="main_content">
+			<form method="get" action="/shoppingCart">
+				<input type="submit" value="小麥克">
+			</form>
+			<form method="get" action="/shoppingCart">
+				<input type="submit" value="半層吉事堡">
+			</form>
+			<form method="get" action="/shoppingCart">
+				<input type="submit" value="香甜雞腿堡">
+			</form>
+		</div>
+	</div>
+</body>

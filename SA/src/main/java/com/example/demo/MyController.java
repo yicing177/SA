@@ -1,46 +1,48 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @Controller
 public class MyController {
+	
+	@Autowired
+	private MenuService menuService;
 
 	@GetMapping("/home")
-	public String home() {
-		// 返回一個視圖名稱（在 templates 資料夾中的 HTML 文件）
-		return "index"; // 對應於 src/main/resources/templates/index.html
+	public String home(Model model) {
+		return "index"; // 對應於 src/main/resources/templates/navbar.html
 	}
 
-	@GetMapping("/aLaCarte")
-	public String aLaCarte(Model model) {
-		model.addAttribute("content", "a_la_carte.html");
-		return "navbar";
-	}
-
-	@GetMapping("/main_meal")
+	@GetMapping("/main")
 	public String main_meal(Model model) {
 		model.addAttribute("content", "main.html");
 		return "navbar";
 	}
 
-	@GetMapping("/dessert")
+	@GetMapping("/submeal")
 	public String dessert(Model model) {
-		model.addAttribute("content", "dessert.html");
+		model.addAttribute("content", "submeal.html");
 		return "navbar";
 	}
 
-	@GetMapping("/drink")
+	@GetMapping("/beverage")
 	public String drink(Model model) {
-		model.addAttribute("content", "drink.html");
+		model.addAttribute("content", "beverage.html");
 		return "navbar";
 	}
 
-	@GetMapping("/shoppingCart")
+	@GetMapping("/cart")
 	public String shoppingCart(Model model) {
-		return "shoppingCart";
+		return "cart";
+	}
+
+	@GetMapping("/meal")
+	public String viewMenu(Model model) {
+		model.addAttribute("meal", menuService.getMenu());
+		return "meal";
 	}
 
 }

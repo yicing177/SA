@@ -14,7 +14,6 @@ public class MenuItem {
         this.price = price;
         this.description = description;
     }
-    // Getters and Setters
     public String getType() {
         return type;
     }
@@ -22,7 +21,6 @@ public class MenuItem {
     public void setType(String type) {
         this.type = type;
     }
-
     public String getItemID() {
         return itemID;
     }
@@ -38,12 +36,12 @@ public class MenuItem {
     public void setName(String name) {
         this.name = name;
     }
-
     public double getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
+
         this.price = price;
     }
 

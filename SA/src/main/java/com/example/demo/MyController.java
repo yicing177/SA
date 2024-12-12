@@ -41,7 +41,7 @@ public class MyController {
 
 	@GetMapping("/meal")
 	public String viewMenu(Model model) {
-		model.addAttribute("meal", menuService.getMenu());
+		model.addAttribute("meal", menuService.toString());
 		return "meal";
 	}
 

@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,5 +36,16 @@ public class MyController {
 	@GetMapping("/cart")
 	public String shoppingCart(Model model) {
 		return "cart";
+	}
+
+	@Autowired
+	private MenuService menuService;
+
+	@GetMapping("/meal")
+	public String getMeals(Model model) {
+		// 從 MenuService 獲取主餐列表
+		List<MainMeal> mainMeals = menuService.getMainMeals();
+		model.addAttribute("meals", mainMeals);
+		return "meal"; // 對應 meal.html
 	}
 }

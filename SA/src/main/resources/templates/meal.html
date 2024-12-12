@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Meals</title>
 </head>
 <body>
-    <h1>Menu</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Action</th>
-        </tr>
-        <th:block th:each="item : ${meal}">
+    <h1>Main Meals</h1>
+    <table border="1">
+        <thead>
             <tr>
-                <td th:text="${item.name}"></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.description}"></td>
+                <th>名稱</th>
+                <th>價格</th>
+                <th>描述</th>
+                <th>醬料</th>
+                <th>主要成分</th>
             </tr>
-        </th:block>
+        </thead>
+        <tbody>
+            <tr th:each="meal : ${meals}">
+                <td th:text="${meal.name}"></td>
+                <td th:text="${meal.price}"></td>
+                <td th:text="${meal.description}"></td>
+                <td th:text="${meal.sauce}"></td>
+                <td th:text="${meal.ingredient}"></td>
+            </tr>
+        </tbody>
     </table>
 </body>
 </html>

@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MyController {
-	
-	@Autowired
-	private MenuService menuService;
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -38,11 +35,4 @@ public class MyController {
 	public String shoppingCart(Model model) {
 		return "cart";
 	}
-
-	@GetMapping("/meal")
-	public String viewMenu(Model model) {
-		model.addAttribute("meal", menuService.getMenu());
-		return "meal";
-	}
-
 }

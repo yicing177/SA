@@ -35,5 +35,4 @@ public class MyController {
 	public String shoppingCart(Model model) {
 		return "cart";
 	}
-
 }

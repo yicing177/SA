@@ -31,7 +31,7 @@ public class Order {
         return orderContent;
     }
 
-    public void setOrderContent(String ordercCntent) {
+    public void setOrderContent(String ordercContent) {
         this.orderContent = orderContent;
     }
 

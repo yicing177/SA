@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Meals</title>
+    <title>Menu</title>
 </head>
 <body>
-    <h1>Main Meals</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>名稱</th>
-                <th>價格</th>
-                <th>描述</th>
-                <th>醬料</th>
-                <th>主要成分</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="meal : ${meals}">
-                <td th:text="${meal.name}"></td>
-                <td th:text="${meal.price}"></td>
-                <td th:text="${meal.description}"></td>
-                <td th:text="${meal.sauce}"></td>
-                <td th:text="${meal.ingredient}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <h1>噹噹賣菜單</h1>
+
+    <h2>主餐</h2>
+    <ul>
+        <li th:each="item : ${mainMenu}">
+            <span th:text="${item.name}">Main Course Item</span> - <span th:text="${item.price}">Price</span>
+        </li>
+    </ul>
+
+    <h2>副食</h2>
+    <ul>
+        <li th:each="item : ${subMealMenu}">
+            <span th:text="${item.name}">SubMeal Item</span> - <span th:text="${item.price}">Price</span>
+        </li>
+    </ul>
+
+    <h2>飲料</h2>
+    <ul>
+        <li th:each="item : ${beverageMenu}">
+            <span th:text="${item.name}">Beverage Item</span> - <span th:text="${item.price}">Price</span>
+        </li>
+    </ul>
+
 </body>
 </html>

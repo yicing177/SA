@@ -48,7 +48,7 @@ public class Menu {
 		MainMeal 大享堡 = new MainMeal("Main", "MF004", "大享堡", 99, "比大亨堡多一根熱狗", "辣醬", "熱狗，起司"); 
 		MainMeal 伊晴拉麵 = new MainMeal("Main", "MF005", "伊晴拉麵", 2010, "單身拉麵", "醬油口味", "拉麵 ，叉燒，糖心蛋"); 
 		MainMeal 螺施豆腐煲 = new MainMeal("Main", "MF006", "螺施豆腐煲", 7537, "施味臭豆甫", "酸辣", "豆腐，蔬菜，田螺"); 
-		MainMeal 火穎地諭麻醬麵 = new MainMeal("Main", "MF007", "火穎地諭麻醬麵", 9999, "火辣面", "麻醬", "麵，麻醬"); 
+		MainMeal 火穎地諭麻醬麵 = new MainMeal("Main", "MF007", "火穎地諭麻醬麵", 9999, "火辣麵", "麻醬", "麵，麻醬"); 
 		
 		// Add these MainMeal items to menuItems list 
 		this.menuItems.add(重油仲嚴小麥克); 

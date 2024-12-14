@@ -14,7 +14,6 @@ public class CartService {
         this.itemRecords = new ArrayList<>();
         this.totalPrice = 0.0;
     }
-
     // 定義點餐記錄類別
     public static class ItemRecord {
         private String recordID;
@@ -57,7 +56,7 @@ public class CartService {
     // 添加菜單項目至購物車
     public void addItem(MenuService.menuItem menuItem, int amount, String content) {
         String recordID = UUID.randomUUID().toString();
-        double totalItemPrice = menuItem.getPrice() * amount;
+        int totalItemPrice = menuItem.getPrice() * amount;
         itemRecords.add(new ItemRecord(recordID, menuItem.getItemID(), menuItem.getType(), menuItem.getName(), amount, totalItemPrice, content));
         totalPrice += totalItemPrice;
     }
@@ -71,7 +70,7 @@ public class CartService {
 
         String recordID = UUID.randomUUID().toString();
         // 計算套餐價格，不包含飲料的價格
-        double setPrice = mainItem.getPrice() + submealItem.getPrice();
+        int setPrice = mainItem.getPrice() + submealItem.getPrice();
         itemRecords.add(new ItemRecord(recordID, mainItem.getItemID() + "," + submealItem.getItemID() + "," + beverageItem.getItemID(),
                 "set", mainItem.getName() + "+" + submealItem.getName() + "+" + beverageItem.getName(), 1, setPrice, content));
         totalPrice += setPrice;
@@ -150,7 +149,7 @@ public class CartService {
     }
 
 
-
+/*
     public static void main(String[] args) {
         // 測試功能
         MenuService menuService = new MenuService();
@@ -203,5 +202,6 @@ public class CartService {
         // 查看現存購物車內容
         cart.viewCart();
     }
+*/
 }
 

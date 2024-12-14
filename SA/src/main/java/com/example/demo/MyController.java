@@ -40,12 +40,13 @@ public class MyController {
 
 	@Autowired
 	private MenuService menuService;
-
+	
 	@GetMapping("/meal")
-	public String getMeals(Model model) {
-		// 從 MenuService 獲取主餐列表
-		List<MainMeal> mainMeals = menuService.getMainMeals();
-		model.addAttribute("meals", mainMeals);
-		return "meal"; // 對應 meal.html
+	public String showMenu(Model model) {
+		// 將所有三個類型的菜單資料放入模型中
+		model.addAttribute("mainMenu", menuService.getMainMenu());
+		model.addAttribute("subMealMenu", menuService.getSubMealMenu());
+		model.addAttribute("beverageMenu", menuService.getBeverageMenu());
+		return "meal";
 	}
 }

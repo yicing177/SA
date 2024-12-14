@@ -5,114 +5,82 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
 @Service
 public class MenuService {
 
-	// 定義菜單項目類別
+	// Getters
 
-	public static class menuItem {
+	public String getItemID() {
 
-		private String itemID;
-
-		private String type; // "main", "submeal", "beverage"
-
-		private String name;
-
-		private double price;
-
-		private String description;
-
-		// Constructor
-
-		public menuItem(String itemID, String type, String name, double price, String description) {
-
-			this.itemID = itemID;
-
-			this.type = type;
-
-			this.name = name;
-
-			this.price = price;
-
-			this.description = description;
-
-		}
-
-		// Getters
-
-		public String getItemID() {
-
-			return itemID;
-
-		}
-
-		public String getType() {
-
-			return type;
-
-		}
-
-		public String getName() {
-
-			return name;
-
-		}
-
-		public double getPrice() {
-
-			return price;
-
-		}
-
-		public String getDescription() {
-
-			return description;
-
-		}
-
-		@Override
-
-		public String toString() {
-
-			return "menuItem{" +
-
-					"itemID='" + itemID + '\'' +
-
-					", type='" + type + '\'' +
-
-					", name='" + name + '\'' +
-
-					", price=" + price +
-
-					", description='" + description + '\'' +
-
-					'}';
-
-		}
+		return getItemID();
 
 	}
 
-	// 菜單列表
+	public String getType() {
 
-	private List<menuItem> menuItems;
-
-	// Constructor
-
-	public void MenuItem() {
-
-		this.menuItems = new ArrayList<>();
+		return getType();
 
 	}
 
-	// 新增菜單項目
+	public String getName() {
 
-	public void addMenuItem(menuItem menuItem) {
-
-		menuItems.add(menuItem);
+		return getName();
 
 	}
 
-	/**
+	public double getPrice() {
+
+		return getPrice();
+
+	}
+
+	public String getDescription() {
+
+		return getDescription();
+
+	}
+
+	@Override
+
+	public String toString() {
+
+		return "menuItem{" +
+
+				"itemID='" + getItemID() + '\'' +
+
+				", type='" + getType() + '\'' +
+
+				", name='" + getName() + '\'' +
+
+				", price=" + getPrice() +
+
+				", description='" + getDescription() + '\'' +
+
+				'}';
+
+	}
+
+	/*
+	 * // 菜單列表
+	 * 
+	 * private List<menuItem> menuItems;
+	 * 
+	 * // Constructor
+	 * 
+	 * public void MenuItem() {
+	 * 
+	 * this.menuItems = new ArrayList<>();
+	 * 
+	 * }
+	 * 
+	 * 新增菜單項目
+	 * 
+	 * public void addMenuItem(menuItem menuItem) {
+	 * 
+	 * menuItems.add(menuItem);
+	 * 
+	 * }
 	 * 
 	 * 根據type查找菜單項目。
 	 * 
@@ -121,12 +89,13 @@ public class MenuService {
 	 * @return 符合條件的菜單項目列表
 	 * 
 	 */
+	private List<MenuItem> menuItems;
 
-	public List<menuItem> getMenuItem(String type) {
+	public List<MenuItem> getMenuItem(String type) {
 
-		List<menuItem> filteredItems = new ArrayList<>();
+		List<MenuItem> filteredItems = new ArrayList<>();
 
-		for (menuItem item : menuItems) {
+		for (MenuItem item : menuItems) {
 
 			if (type == null || item.getType().equalsIgnoreCase(type)) {
 
@@ -139,74 +108,92 @@ public class MenuService {
 		return filteredItems;
 
 	}
+//以上甫哥
 
-	private List<MainMeal> mainMeals;
+	private List<MenuItem> mainMenu = new ArrayList<>();
+	private List<MenuItem> subMealMenu = new ArrayList<>();
+	private List<MenuItem> beverageMenu = new ArrayList<>();
 
-	// Constructor - 初始化主餐資料
 	public MenuService() {
-		this.mainMeals = new ArrayList<>();
-		initializeMainMeals();
-	}
+    	mainMenu.add(new MainMeal("Main", "MF001", "重油仲儼小麥克", 827, "很油很鹹", "番茄醬", "牛肉，麵包，生菜"));
+    	mainMenu.add(new MainMeal("Main", "MF002", "半層吉事堡", 458, "比雙層吉是堡薄", "塔塔醬", "起司，生菜"));
+    	mainMenu.add(new MainMeal("Main", "MF003", "香甜雞腿堡", 372, "不會辣的香辣雞腿堡", "甜醬", "雞腿，生菜，甜醬"));
+    	mainMenu.add(new MainMeal("Main", "MF004", "大享堡", 99, "比大亨堡多一根熱狗", "辣醬", "熱狗，起司"));
+    	mainMenu.add(new MainMeal("Main", "MF005", "伊晴拉麵", 2010, "單身拉麵", "醬油口味", "拉麵 ，叉燒，糖心蛋"));
+    	mainMenu.add(new MainMeal("Main", "MF006", "螺施豆腐煲", 7537, "施味臭豆甫", "酸辣", "豆腐，蔬菜，田螺"));
+    	mainMenu.add(new MainMeal("Main", "MF007", "火穎地諭麻將麵", 9999, "火辣面", "麻將", "麵，麻將"));
 
-	private void initializeMainMeals() {
-		mainMeals.add(new MainMeal("Main", "MF001", "重油仲嚴小麥克", 827, "很油很鹹", "番茄醬", "牛肉，麵包，生菜"));
-		mainMeals.add(new MainMeal("Main", "MF002", "半層吉事堡", 458, "比雙層吉是堡薄", "塔塔醬", "起司，生菜"));
-		mainMeals.add(new MainMeal("Main", "MF003", "香甜雞腿堡", 372, "不會辣的香辣雞腿堡", "甜醬", "雞腿，生菜，甜醬"));
-		mainMeals.add(new MainMeal("Main", "MF004", "大享堡", 99, "比大亨堡多一根熱狗", "辣醬", "熱狗，起司"));
-		mainMeals.add(new MainMeal("Main", "MF005", "伊晴拉麵", 2010, "單身拉麵", "醬油口味", "拉麵 ，叉燒，糖心蛋"));
-		mainMeals.add(new MainMeal("Main", "MF006", "螺施豆腐煲", 7537, "施味臭豆甫", "酸辣", "豆腐，蔬菜，田螺"));
-		mainMeals.add(new MainMeal("Main", "MF007", "火穎地諭麻醬麵", 9999, "火辣面", "麻醬", "麵，麻醬"));
+    	subMealMenu.add(new Submeal("Snack", "SF001", "豬塊", 67, "因應禽流感，雞塊先以豬塊代替", "甜醋醬", "內含豬肉"));
+    	subMealMenu.add(new Submeal("Snack", "SF002", "超派", 22, "內含獵豹肉，吃了變超派", "地溝油", "內含獵豹肉"));
+    	subMealMenu.add(new Submeal("Snack", "SF003", "倉鼠餅", 87, "毛茸茸又可愛，少女打卡必備", "無", "伊晴小孩"));
+        subMealMenu.add(new Submeal("Snack", "SF004", "羅波高", 64, "", "辣醬", ""));
+        subMealMenu.add(new Submeal("Snack", "SF005", "育達出皮蛋", 13, "臭皮蛋", "皮蛋", "蛋"));
+        subMealMenu.add(new Submeal("Snack", "SF006", "陵邱香雞排", 8450, "", "蒜", "雞排"));
+        
+    	beverageMenu.add(new Beverage("Drink", "B001", "可悲", 83, "比可樂還好喝", true, "半糖"));
+    	beverageMenu.add(new Beverage("Drink", "B002", "冰碧", 47, "比雪碧還好喝", true, "少糖"));
+    	beverageMenu.add(new Beverage("Drink", "B003", "蘭達", 90, "比芬達還好喝", false, "無糖"));
 	}
-
 	// 提供主餐資料
-	public List<MainMeal> getMainMeals() {
-		return mainMeals;
+	public List<MenuItem> getMainMenu() {
+		return mainMenu;
 	}
+	public List<MenuItem> getSubMealMenu() {
+        return subMealMenu;
+    }
 
-	public static void main(String[] args) {
-
-		// 測試
-
-		MenuService menu = new MenuService();
-
-		menu.addMenuItem(new menuItem("1", "main", "Steak", 15.99, "Grilled steak with sauce"));
-
-		menu.addMenuItem(new menuItem("2", "submeal", "Salad", 5.99, "Fresh garden salad"));
-
-		menu.addMenuItem(new menuItem("3", "beverage", "Cola", 1.99, "Chilled cola drink"));
-
-		menu.addMenuItem(new menuItem("4", "main", "Pasta", 12.99, "Creamy Alfredo pasta"));
-
-		System.out.println("--- 主餐 ---");
-
-		List<menuItem> mainItems = menu.getMenuItem("main");
-
-		for (menuItem item : mainItems) {
-
-			System.out.println(item);
-
-		}
-
-		System.out.println("\n--- 飲料 ---");
-
-		List<menuItem> beverageItems = menu.getMenuItem("beverage");
-
-		for (menuItem item : beverageItems) {
-
-			System.out.println(item);
-
-		}
-
-		System.out.println("\n--- 所有項目 ---");
-
-		List<menuItem> allItems = menu.getMenuItem(null);
-
-		for (menuItem item : allItems) {
-
-			System.out.println(item);
-
-		}
-
-	}
-
+    public List<MenuItem> getBeverageMenu() {
+        return beverageMenu;
+    }
+	/*
+	 * public static void main(String[] args) {
+	 * 
+	 * // 測試
+	 * 
+	 * MenuService menu = new MenuService();
+	 * 
+	 * menu.addMenuItem(new menuItem("1", "main", "Steak", 15.99,
+	 * "Grilled steak with sauce"));
+	 * 
+	 * menu.addMenuItem(new menuItem("2", "submeal", "Salad", 5.99,
+	 * "Fresh garden salad"));
+	 * 
+	 * menu.addMenuItem(new menuItem("3", "beverage", "Cola", 1.99,
+	 * "Chilled cola drink"));
+	 * 
+	 * menu.addMenuItem(new menuItem("4", "main", "Pasta", 12.99,
+	 * "Creamy Alfredo pasta"));
+	 * 
+	 * System.out.println("--- 主餐 ---");
+	 * 
+	 * List<menuItem> mainItems = menu.getMenuItem("main");
+	 * 
+	 * for (menuItem item : mainItems) {
+	 * 
+	 * System.out.println(item);
+	 * 
+	 * }
+	 * 
+	 * System.out.println("\n--- 飲料 ---");
+	 * 
+	 * List<menuItem> beverageItems = menu.getMenuItem("beverage");
+	 * 
+	 * for (menuItem item : beverageItems) {
+	 * 
+	 * System.out.println(item);
+	 * 
+	 * }
+	 * 
+	 * System.out.println("\n--- 所有項目 ---");
+	 * 
+	 * List<menuItem> allItems = menu.getMenuItem(null);
+	 * 
+	 * for (menuItem item : allItems) {
+	 * 
+	 * System.out.println(item);
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 }

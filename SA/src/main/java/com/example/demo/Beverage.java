@@ -45,7 +45,7 @@ public class Beverage extends MenuItem {
         beverageList.add(可悲);
         beverageList.add(冰碧);
         beverageList.add(蘭達);
-
+/*
         // Display beverages
         System.out.println("可選擇的飲料");
         for (Beverage beverage : beverageList) {
@@ -53,9 +53,10 @@ public class Beverage extends MenuItem {
             System.out.println("要冰嗎: " + (beverage.isCold() ? "Yes" : "No") + ", 甜度: " + beverage.getSugar());
         }
         
-        /*
+        
         // Example of applying discount
         System.out.println("\nApplying discount...");
-        可悲.setDiscount();*/
+        可悲.setDiscount();
+*/
     }
 }

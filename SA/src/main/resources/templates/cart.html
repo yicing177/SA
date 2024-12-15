@@ -1,1 +1,23 @@
-購物車是我啦哈哈
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>購物車</title>
+</head>
+<body>
+    <h1>購物車</h1>
+    <ul>
+        <!-- 顯示購物車中的餐點 -->
+        <li th:each="item : ${itemRecords}">
+        	餐點：
+            <span th:text="${item.name}">餐點名稱</span> 
+            ，單價：
+            <span th:text="${item.price}">價格</span> 
+            ，數量：
+            <span th:text="${item.amount}">數量</span>
+        </li>
+        總金額：
+        <span th:text="${totalPrice}">價格</span>
+    </ul>
+    <a href="/meal">繼續點餐</a>
+</body>
+</html>

@@ -145,6 +145,34 @@ public class MenuService {
     public List<MenuItem> getBeverageMenu() {
         return beverageMenu;
     }
+    public List<MenuItem> getAllMenuItems() {
+        List<MenuItem> allMenuItems = new ArrayList<>();
+        allMenuItems.addAll(mainMenu);
+        allMenuItems.addAll(subMealMenu);
+        allMenuItems.addAll(beverageMenu);
+        return allMenuItems;
+    }
+    public MenuItem findMenuItemByID(String itemID) {
+        // 在所有菜單項目中查找
+        for (MenuItem item : mainMenu) {
+            if (item.getItemID().equals(itemID)) {
+                return item;  // 找到後返回該項目
+            }
+        }
+        for (MenuItem item : subMealMenu) {
+            if (item.getItemID().equals(itemID)) {
+                return item;
+            }
+        }
+        for (MenuItem item : beverageMenu) {
+            if (item.getItemID().equals(itemID)) {
+                return item;
+            }
+        }
+        // 如果未找到，拋出異常或返回 null
+        throw new IllegalArgumentException("MenuItem not found with ID: " + itemID);
+    }
+
 	/*
 	 * public static void main(String[] args) {
 	 * 

@@ -20,4 +20,20 @@ public class ItemRecord {
 		this.recordPrice = recordPrice;
 		this.content = content;
 	}
+
+	public void getMenuType() {
+		this.type = type;
+	}
+
+	public String getItemID() {
+		return itemID;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public String getContent() {
+		return content;
+	}
 }

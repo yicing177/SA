@@ -1,31 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Menu</title>
+<title>Menu</title>
 </head>
 <body>
-    <h1>噹噹賣菜單</h1>
+	<h1>噹噹賣菜單</h1>
 
-    <h2>主餐</h2>
-    <ul>
-        <li th:each="item : ${mainMenu}">
-            <span th:text="${item.name}">Main Course Item</span> - <span th:text="${item.price}">Price</span>
-        </li>
-    </ul>
+	<div>
+		<h2>主餐</h2>
+		<ul>
+			<li th:each="item : ${mainMenu}"><span th:text="${item.name}">菜品名稱</span>
+				- <span th:text="${item.price}">價格</span> <!-- 使用 data-item-id 存儲菜品 ID -->
+				<button th:data-item-id="${item.itemID}"
+					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">加入購物車</button>
+			</li>
+		</ul>
+	</div>
+	<div>
+		<h2>副食</h2>
+		<ul>
+			<li th:each="item : ${subMealMenu}"><span th:text="${item.name}">菜品名稱</span>
+				- <span th:text="${item.price}">價格</span> <!-- 使用 data-item-id 存儲菜品 ID -->
+				<button th:data-item-id="${item.itemID}"
+					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">加入購物車</button>
+			</li>
+		</ul>
+	</div>
+	<div>
+		<h2>飲料</h2>
+		<ul>
+			<li th:each="item : ${beverageMenu}"><span
+				th:text="${item.name}">菜品名稱</span> - <span th:text="${item.price}">價格</span>
+				<!-- 使用 data-item-id 存儲菜品 ID -->
+				<button th:data-item-id="${item.itemID}"
+					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">加入購物車</button>
+			</li>
+		</ul>
+	</div>
+	<script>
+        function addToCart(itemID) {
+            // 這裡的 shoppingCartRequest 是您要發送到後端的資料
+            let shoppingCartRequest = {
+                menuType: "all",  // 這裡您可以傳遞一個統一的類型標識
+                itemID: itemID,  // 餐點的 ID
+                amount: 1,       // 假設每次只加 1 個
+                content: ""      // 如果有其他內容可以填寫
+            };
 
-    <h2>副食</h2>
-    <ul>
-        <li th:each="item : ${subMealMenu}">
-            <span th:text="${item.name}">SubMeal Item</span> - <span th:text="${item.price}">Price</span>
-        </li>
-    </ul>
-
-    <h2>飲料</h2>
-    <ul>
-        <li th:each="item : ${beverageMenu}">
-            <span th:text="${item.name}">Beverage Item</span> - <span th:text="${item.price}">Price</span>
-        </li>
-    </ul>
-
+            // 使用 Fetch API 發送 POST 請求
+            fetch("/cart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(shoppingCartRequest)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 顯示加入購物車結果
+                alert(data.message);
+                document.getElementById('responseMessage').style.display = 'block';
+                document.getElementById('messageText').innerText = data.message;
+                document.getElementById('continueLink').href = data.continueLink;
+                document.getElementById('viewCartLink').href = data.viewCartLink;
+            })
+            .catch(error => {
+                console.error("加入購物車失敗:", error);
+            });
+        }
+    </script>
 </body>
 </html>

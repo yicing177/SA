@@ -36,7 +36,7 @@ public class MenuItem {
     public void setName(String name) {
         this.name = name;
     }
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 

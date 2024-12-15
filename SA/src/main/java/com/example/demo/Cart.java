@@ -3,7 +3,7 @@ package com.example.demo;
 import java.util.List;
 
 public class Cart {
-	private int totalPrice;
+	private int totalPrice = 0;
 	private List<ItemRecord> items;
 
 	public int getTotalPrice() {

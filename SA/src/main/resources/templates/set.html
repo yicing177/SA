@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>選擇套餐</title>
+</head>
+<body>
+	<h1>選擇套餐</h1>
+
+	<!-- 顯示主餐資訊 -->
+	<div id="mainItemInfo">
+		<h3>主餐:</h3>
+		<span th:text="${mainItem.name}">主餐名稱</span> - <span
+			th:text="${mainItem.price}">主餐價格</span>
+	</div>
+
+	<!-- 顯示副食選擇 -->
+	<h3>選擇副食</h3>
+	<div th:each="item : ${subMealMenu}">
+		<input type="radio" name="sideItem" th:value="${item.itemID}" /> <span
+			th:text="${item.name}">副食名稱</span>
+	</div>
+
+	<!-- 顯示飲料選擇 -->
+	<h3>選擇飲料 (免費贈送)</h3>
+	<div th:each="item : ${beverageMenu}">
+		<input type="radio" name="drinkItem" th:value="${item.itemID}" /> <span
+			th:text="${item.name}">飲料名稱</span>
+	</div>
+	<h4>數量</h4>
+	<input type="number" id="amount" min="1" value="1" />
+	<!-- 提交套餐選擇 -->
+	<button id="confirmSetMealButton">確認套餐</button>
+
+	<script>
+        // 獲取 URL 中的 mainItemID
+        const urlParams = new URLSearchParams(window.location.search);
+        const mainItemID = urlParams.get('mainItemID');
+        
+        // 當用戶確認套餐時，提交選擇的套餐
+        document.getElementById('confirmSetMealButton').onclick = function() {
+            const selectedSideItemID = document.querySelector('input[name="sideItem"]:checked')?.value;
+            const selectedDrinkItemID = document.querySelector('input[name="drinkItem"]:checked')?.value;
+            const amount = parseInt(document.getElementById("amount").value) || 1;
+            
+            if (!selectedSideItemID || !selectedDrinkItemID) {
+                alert("請選擇副食和飲料！");
+                return;
+            }
+
+            // 將套餐信息發送到後端
+            const requestBody = {
+            	mealType: "set",
+                mainItemID: mainItemID,
+                sideItemID: selectedSideItemID,
+                drinkItemID: selectedDrinkItemID,
+                amount: amount
+            };
+
+            fetch("/cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.href = "/meal";
+              
+            })
+            .catch(error => {
+                console.error("加入購物車失敗:", error);
+            });
+        };
+    </script>
+</body>
+</html>

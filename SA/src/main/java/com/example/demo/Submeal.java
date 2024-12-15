@@ -42,18 +42,6 @@ public class Submeal extends MenuItem {
         submealList.add(羅波高);
         submealList.add(育達出皮蛋);
         submealList.add(陵邱香雞排);
-      
 
-        // Display beverages
-        System.out.println("可選擇的點心");
-        for (Submeal submeal : submealList) {
-            System.out.println("商品名稱: " + submeal.getName() + ", 價格: " + submeal.getPrice() + ", Description: " + submeal.getDescription());
-            System.out.println("要醬嗎: " + submeal.getSauce()+ ", 主要成分: " + submeal.getIngredient());
-        }
-        
-        /*
-        // Example of applying discount
-        System.out.println("\nApplying discount...");
-        可悲.setDiscount();*/
     }
 }

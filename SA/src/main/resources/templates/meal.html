@@ -5,14 +5,22 @@
 </head>
 <body>
 	<h1>噹噹賣菜單</h1>
-
+	<div>
+		<form method="get" action="/cart">
+			<input type="submit" value="查看購物車">
+		</form>
+	</div>
 	<div>
 		<h2>主餐</h2>
 		<ul>
 			<li th:each="item : ${mainMenu}"><span th:text="${item.name}">菜品名稱</span>
 				- <span th:text="${item.price}">價格</span> <!-- 使用 data-item-id 存儲菜品 ID -->
 				<button th:data-item-id="${item.itemID}"
-					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">加入購物車</button>
+					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">單點</button>
+				<input type="number" min="1" value="1"
+				th:id="'amount-' + ${item.itemID}" />
+				<button th:data-item-id="${item.itemID}"
+					th:onclick="|window.location.href='/set?mainItemID=' + this.getAttribute('data-item-id')|">套餐</button>
 			</li>
 		</ul>
 	</div>
@@ -20,10 +28,11 @@
 		<h2>副食</h2>
 		<ul>
 			<li th:each="item : ${subMealMenu}"><span th:text="${item.name}">菜品名稱</span>
-				- <span th:text="${item.price}">價格</span> <!-- 使用 data-item-id 存儲菜品 ID -->
+				- <span th:text="${item.price}">價格</span>
 				<button th:data-item-id="${item.itemID}"
 					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">加入購物車</button>
-			</li>
+				<input type="number" min="1" value="1"
+				th:id="'amount-' + ${item.itemID}" /></li>
 		</ul>
 	</div>
 	<div>
@@ -31,43 +40,38 @@
 		<ul>
 			<li th:each="item : ${beverageMenu}"><span
 				th:text="${item.name}">菜品名稱</span> - <span th:text="${item.price}">價格</span>
-				<!-- 使用 data-item-id 存儲菜品 ID -->
+
 				<button th:data-item-id="${item.itemID}"
 					th:onclick="|addToCart(this.getAttribute('data-item-id'))|">加入購物車</button>
-			</li>
+				<input type="number" min="1" value="1"
+				th:id="'amount-' + ${item.itemID}" /></li>
 		</ul>
 	</div>
 	<script>
-        function addToCart(itemID) {
-            // 這裡的 shoppingCartRequest 是您要發送到後端的資料
-            let shoppingCartRequest = {
-                menuType: "all",  // 這裡您可以傳遞一個統一的類型標識
-                itemID: itemID,  // 餐點的 ID
-                amount: 1,       // 假設每次只加 1 個
-                content: ""      // 如果有其他內容可以填寫
-            };
+    function addToCart(mainItemID, mealType, sideItemID, drinkItemID) {
+    	const amountInput = document.getElementById(`amount-${mainItemID}`);
+        const amount = parseInt(amountInput.value) || 1;1
+    	const requestBody = {
+            mainItemID: mainItemID,
+            mealType: mealType,
+            sideItemID: sideItemID,
+            drinkItemID: drinkItemID,
+            amount: amount
+        };
 
-            // 使用 Fetch API 發送 POST 請求
-            fetch("/cart", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(shoppingCartRequest)
-            })
-            .then(response => response.json())
-            .then(data => {
-                // 顯示加入購物車結果
-                alert(data.message);
-                document.getElementById('responseMessage').style.display = 'block';
-                document.getElementById('messageText').innerText = data.message;
-                document.getElementById('continueLink').href = data.continueLink;
-                document.getElementById('viewCartLink').href = data.viewCartLink;
-            })
-            .catch(error => {
-                console.error("加入購物車失敗:", error);
-            });
-        }
-    </script>
+        fetch("/cart", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => {
+            console.error("加入購物車失敗:", error);
+        });
+    }
+</script>
 </body>
 </html>

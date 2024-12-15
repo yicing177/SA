@@ -22,5 +22,3 @@ public class Cart {
 		this.items = items;
 	}
 }
-
-// Getter 和 Setter

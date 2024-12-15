@@ -1,23 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>購物車</title>
+<title>購物車</title>
 </head>
 <body>
-    <h1>購物車</h1>
-    <ul>
-        <!-- 顯示購物車中的餐點 -->
-        <li th:each="item : ${itemRecords}">
-        	餐點：
-            <span th:text="${item.name}">餐點名稱</span> 
-            ，單價：
-            <span th:text="${item.price}">價格</span> 
-            ，數量：
-            <span th:text="${item.amount}">數量</span>
-        </li>
-        總金額：
-        <span th:text="${totalPrice}">價格</span>
-    </ul>
-    <a href="/meal">繼續點餐</a>
+	<h1>購物車</h1>
+	<h2>單點</h2>
+	<ul>
+		<!-- 顯示購物車中的餐點 -->
+		<li th:each="item : ${itemRecords}">餐點： <span
+			th:text="${item.name}">餐點名稱</span>， <span th:text="${item.amount}"></span>個單點價格：
+			<span th:text="${item.price}">價格</span> <input type="number"
+			th:id="'quantity_' + ${item.getRecordID()}" th:value="${item.amount}"
+			min="1">
+
+			<button th:id="'update_' + ${item.getRecordID}"
+				th:attr="onclick=|updateQuantity ('${item.getRecordID()}')|">更新數量</button>
+
+			<button th:id="'delete_' + ${item.getRecordID()}"
+				th:attr="onclick=|deleteItem('${item.getRecordID()}')|">刪除</button>
+
+		</li>
+	</ul>
+	<h2>套餐</h2>
+	<ul>
+		<li th:each="set : ${setRecords}">主餐：<span
+			th:text="${set.mainItem.name}">主餐名稱</span>， 副餐：<span
+			th:text="${set.sideItem.name}">副餐名稱</span>， 飲料：<span
+			th:text="${set.drinkItem.name}">飲料名稱</span>， <span
+			th:text="${set.amount}"></span>個套餐價格：<span th:text="${set.price}">價格</span>
+			<input type="number"
+			th:id="'quantity_set_' + ${set.getsetRecordID()}"
+			th:value="${set.amount}" min="1">
+			<button th:id="'update_set_' + ${set.getsetRecordID()}"
+				th:attr="onclick=|updateSetQuantity('${set.getsetRecordID()}')|">更新數量</button>
+
+			<button th:id="'delete_set_' + ${set.getsetRecordID()}"
+				th:attr="onclick=|deleteSetItem('${set.getsetRecordID()}')|">刪除</button>
+
+		</li>
+	</ul>
+
+	總金額：
+	<span th:text="${totalPrice}">價格</span>
+	<a href="/meal">繼續點餐</a>
+
+	<script>
+//更新單點餐點數量
+function updateQuantity(recordID) {
+    const newQuantity = document.getElementById('quantity_' + recordID).value;
+    fetch('/cart/update/' + recordID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: newQuantity })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();  // 刷新頁面以顯示更新的購物車
+    })
+    .catch(error => console.error("更新數量失敗:", error));
+}
+
+// 刪除單點餐點
+function deleteItem(recordID) {
+    fetch('/cart/delete/' + recordID, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();  // 刷新頁面以顯示更新的購物車
+    })
+    .catch(error => console.error("刪除餐點失敗:", error));
+}
+
+// 更新套餐數量
+function updateSetQuantity(setRecordID) {
+    const newQuantity = document.getElementById('quantity_set_' + setRecordID).value;
+
+    fetch('/cart/update/set/' + setRecordID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: newQuantity })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();  // 刷新頁面以顯示更新的購物車
+    })
+    .catch(error => console.error("更新套餐數量失敗:", error));
+}
+
+// 刪除套餐餐點
+function deleteSetItem(setRecordID) {
+    fetch('/cart/delete/set/' + setRecordID, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();  // 刷新頁面以顯示更新的購物車
+    })
+    .catch(error => console.error("刪除套餐餐點失敗:", error));
+}
+
+
+</script>
 </body>
 </html>

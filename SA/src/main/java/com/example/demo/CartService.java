@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+
 @Service
 public class CartService {
 
@@ -39,39 +40,116 @@ public class CartService {
 			this.content = content;
 		}
 
+		public void setAmount(int amount) {
+			this.amount = amount; 
+		}
+
+		public void setPrice(int price) {
+			this.price = price; 
+		}
+
 		public String getRecordID() {
 			return recordID;
 		}
 
-	    public String getItemID() {
-	        return itemID;
-	    }
+		public String getItemID() {
+			return itemID;
+		}
 
-	    public String getType() {
-	        return type;
-	    }
+		public String getType() {
+			return type;
+		}
 
-	    public String getName() {
-	        return name;
-	    }
+		public String getName() {
+			return name;
+		}
 
-	    public int getAmount() {
-	        return amount;
-	    }
+		public int getAmount() {
+			return amount;
+		}
 
-	    public int getPrice() {
-	        return price;
-	    }
+		public int getPrice() {
+			return price;
+		}
 
-	    public String getContent() {
-	        return content;
-	    }
+		public String getContent() {
+			return content;
+		}
 
 		@Override
 		public String toString() {
 			return "ItemRecord{" + "recordID='" + recordID + '\'' + ", itemID='" + itemID + '\'' + ", type='" + type
 					+ '\'' + ", name='" + name + '\'' + ", amount=" + amount + ", price=" + price + ", content='"
 					+ content + '\'' + '}';
+		}
+
+		public void setTotalPrice(int i) {
+			this.price = price;
+
+		}
+	}
+
+	public class SetRecord {
+		private String setRecordID;
+		private MenuItem mainItem;
+		private MenuItem sideItem;
+		private MenuItem drinkItem;
+		private int amount; // 使用 amount
+		private int price;
+
+		public SetRecord(String setRecordID, MenuItem mainItem, MenuItem sideItem, MenuItem drinkItem, int amount,
+				int price) {
+			this.setRecordID = setRecordID;
+			this.mainItem = mainItem;
+			this.sideItem = sideItem;
+			this.drinkItem = drinkItem;
+			this.amount = amount;
+			this.price = price;
+		}
+
+		// Getter 和 Setter 方法
+		public String getsetRecordID() {
+			return setRecordID;
+		}
+
+		public MenuItem getMainItem() {
+			return mainItem;
+		}
+
+		public void setMainItem(MenuItem mainItem) {
+			this.mainItem = mainItem;
+		}
+
+		public MenuItem getSideItem() {
+			return sideItem;
+		}
+
+		public void setSideItem(MenuItem sideItem) {
+			this.sideItem = sideItem;
+		}
+
+		public MenuItem getDrinkItem() {
+			return drinkItem;
+		}
+
+		public void setDrinkItem(MenuItem drinkItem) {
+			this.drinkItem = drinkItem;
+		}
+
+		public int getPrice() {
+			return price;
+		}
+
+		public void setPrice(int price) {
+			this.price = price;
+		}
+
+		public int getAmount() {
+			return amount;
+		}
+
+		public void setAmount(int amount) {
+			this.amount = amount;
 		}
 	}
 
@@ -83,75 +161,80 @@ public class CartService {
 				totalItemPrice, content));
 		totalPrice += totalItemPrice;
 	}
-/*
-	// 添加套餐項目至購物車
-	public void addSetItem(MenuService.menuItem mainItem, MenuService.menuItem submealItem,
-			MenuService.menuItem beverageItem, String content) {
-		// 確保項目類型正確
-		if (!"main".equalsIgnoreCase(mainItem.getType()) || !"submeal".equalsIgnoreCase(submealItem.getType())
-				|| !"beverage".equalsIgnoreCase(beverageItem.getType())) {
-			throw new IllegalArgumentException("Invalid item types for a set. Required: main, submeal, beverage.");
-		}
 
-		String recordID = UUID.randomUUID().toString();
-		// 計算套餐價格，不包含飲料的價格
-		int setPrice = mainItem.getPrice() + submealItem.getPrice();
-		itemRecords.add(new ItemRecord(recordID,
-				mainItem.getItemID() + "," + submealItem.getItemID() + "," + beverageItem.getItemID(), "set",
-				mainItem.getName() + "+" + submealItem.getName() + "+" + beverageItem.getName(), 1, setPrice, content));
-		totalPrice += setPrice;
-	}
-*/
-	// 自定義餐點內容
-	public String customize(String itemID, String note) {
-		return "Customized note for item " + itemID + ": " + note;
+	private List<SetRecord> setRecords = new ArrayList<>();
+
+	public void addSetMeal(MenuItem mainItem, MenuItem sideItem, MenuItem drinkItem, int amount, int totalPrice) {
+		String setRecordID = UUID.randomUUID().toString();
+		SetRecord setRecord = new SetRecord(setRecordID, mainItem, sideItem, drinkItem, amount, totalPrice); 
+																												
+		setRecords.add(setRecord);
+		this.totalPrice += totalPrice;
 	}
 
-	// 刪除點餐記錄
-	public void deleteItemRecord(String recordID) {
-		ItemRecord recordToRemove = null;
-		for (ItemRecord record : itemRecords) {
-			if (record.getRecordID().equals(recordID)) {
-				recordToRemove = record;
-				break;
-			}
-		}
-		if (recordToRemove != null) {
-			itemRecords.remove(recordToRemove);
-			totalPrice -= recordToRemove.price;
-		} else {
-			System.out.println("Record with ID " + recordID + " not found.");
-		}
+	public List<SetRecord> viewSetCart() {
+		return setRecords; 
 	}
 
-	// 修改點餐記錄
-	public void modifyItemRecord(String recordID, int amount, String content) {
-		if (amount < 1) {
-			System.out.println("Amount must be at least 1.");
-			return;
-		}
-
-		for (ItemRecord record : itemRecords) {
-			if (record.getRecordID().equals(recordID)) {
-				int originalPrice = record.price;
-				record.amount = amount;
-				record.price = record.amount * (record.price / record.amount); // 單價重新計算
-				record.content = content;
-
-				totalPrice = totalPrice - originalPrice + record.price;
-				return;
-			}
-		}
-
-		System.out.println("Record with ID " + recordID + " not found.");
+	public void updateItemQuantity(String recordID, int newAmount) {
+		// 找到對應的 ItemRecord
+		ItemRecord item = itemRecords.stream().filter(i -> i.getRecordID().equals(recordID)).findFirst()
+				.orElseThrow(() -> new RuntimeException("Item not found"));
+		int originalPrice = item.getPrice();
+		item.setAmount(newAmount); // 更新數量
+		int price = item.getPrice()* item.getAmount();
+		item.setPrice(price);
+		totalPrice = getTotalPrice(); // 重新計算總價
 	}
+
+	public void updateSetQuantity(String recordID, int newAmount) {
+		// 找到對應的 SetRecord
+		SetRecord setRecord = setRecords.stream().filter(s -> s.getsetRecordID().equals(recordID)).findFirst()
+				.orElseThrow(() -> new RuntimeException("Set record not found"));
+		int originalPrice = setRecord.getPrice();
+		// 更新數量
+		setRecord.setAmount(newAmount);
+
+		// 重新計算套餐總價
+		int price = (setRecord.getMainItem().getPrice() + setRecord.getSideItem().getPrice()) * newAmount;
+		setRecord.setPrice(price);
+
+		// 更新總金額
+		totalPrice = getTotalPrice();
+	}
+
+	public void deleteItem(String recordID) {
+		itemRecords.removeIf(item -> item.getRecordID().equals(recordID)); // 刪除對應的項目
+		totalPrice = getTotalPrice(); // 重新計算總價
+	}
+
+	public void deleteSetItem(String setRecordID) {
+		setRecords.removeIf(set -> set.getsetRecordID().equals(setRecordID));
+		totalPrice = getTotalPrice();
+	}
+
+
 
 	public int getTotalPrice() {
-		return totalPrice;
+		int total = 0;
+
+		for (ItemRecord item : itemRecords) {
+			total += item.getPrice();
+		}
+
+		for (SetRecord setRecord : setRecords) {
+			total += setRecord.getPrice();
+		}
+
+		return total;
 	}
 
 	public List<ItemRecord> getItemRecords() {
 		return itemRecords;
+	}
+
+	public List<SetRecord> getSetRecords() {
+		return setRecords;
 	}
 
 	@Override
@@ -167,14 +250,8 @@ public class CartService {
 
 	// 查看購物車內容
 	public List<ItemRecord> viewCart() {
-		System.out.println("Current Cart Details:");
-		for (ItemRecord record : itemRecords) {
-			System.out.println(record);
-		}
-		System.out.println("Total Price: " + totalPrice);
 		return itemRecords;
 	}
-//以上甫哥
 
 	private final List<Cart> cartItems = new ArrayList<>();
 
@@ -185,56 +262,4 @@ public class CartService {
 	public void clearCart() {
 		cartItems.clear();
 	}
-	
-
-	/*
-	 * public static void main(String[] args) { // 測試功能 MenuService menuService =
-	 * new MenuService(); menuService.addMenuItem(new MenuService.menuItem("1",
-	 * "main", "Steak", 15.99, "Grilled steak with sauce"));
-	 * menuService.addMenuItem(new MenuService.menuItem("2", "submeal", "Salad",
-	 * 5.99, "Fresh garden salad")); menuService.addMenuItem(new
-	 * MenuService.menuItem("3", "beverage", "Cola", 1.99, "Chilled cola drink"));
-	 * menuService.addMenuItem(new MenuService.menuItem("4", "main", "Pasta", 12.99,
-	 * "Creamy Alfredo pasta")); menuService.addMenuItem(new
-	 * MenuService.menuItem("5", "submeal", "Soup", 4.99, "Hot chicken soup"));
-	 * menuService.addMenuItem(new MenuService.menuItem("6", "beverage", "Tea",
-	 * 2.99, "Hot green tea"));
-	 * 
-	 * CartService cart = new CartService();
-	 * 
-	 * // 添加單點 MenuService.menuItem steak = menuService.getMenuItem("main").get(0);
-	 * MenuService.menuItem pasta = menuService.getMenuItem("main").get(1); String
-	 * steakContent = cart.customize(steak.getItemID(), "Medium rare"); String
-	 * pastaContent = cart.customize(pasta.getItemID(), "Extra cheese");
-	 * cart.addItem(steak, 2, steakContent); cart.addItem(pasta, 1, pastaContent);
-	 * 
-	 * // 查看現存購物車內容 cart.viewCart();
-	 * 
-	 * // 添加套餐 MenuService.menuItem salad =
-	 * menuService.getMenuItem("submeal").get(0); MenuService.menuItem soup =
-	 * menuService.getMenuItem("submeal").get(1); MenuService.menuItem cola =
-	 * menuService.getMenuItem("beverage").get(0); MenuService.menuItem tea =
-	 * menuService.getMenuItem("beverage").get(1);
-	 * 
-	 * String setContent1 = cart.customize(steak.getItemID() + "," +
-	 * salad.getItemID() + "," + cola.getItemID(), "No ice, Medium rare"); String
-	 * setContent2 = cart.customize(pasta.getItemID() + "," + soup.getItemID() + ","
-	 * + tea.getItemID(), "Less sugar"); cart.addSetItem(steak, salad, cola,
-	 * setContent1); cart.addSetItem(pasta, soup, tea, setContent2);
-	 * 
-	 * // 查看現存購物車內容 cart.viewCart();
-	 * 
-	 * 
-	 * // 修改單點記錄 String recordIDToModify =
-	 * cart.getItemRecords().get(0).getRecordID();
-	 * cart.modifyItemRecord(recordIDToModify, 3, "Well done");
-	 * 
-	 * // 查看現存購物車內容 cart.viewCart();
-	 * 
-	 * // 刪除套餐記錄 String recordIDToDelete =
-	 * cart.getItemRecords().get(3).getRecordID();
-	 * cart.deleteItemRecord(recordIDToDelete);
-	 * 
-	 * // 查看現存購物車內容 cart.viewCart(); }
-	 */
 }

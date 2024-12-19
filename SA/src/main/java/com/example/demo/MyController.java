@@ -12,10 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class MyController {
+	@PostConstruct
+    public void initializeMenus() {
+        MainMeal.initializeMenu(); 
+        Beverage.initializeMenu(); 
+        Submeal.initializeMenu(); 
+    }
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -33,9 +42,9 @@ public class MyController {
 	@GetMapping("/meal")
 	public String getMenu(Model model) {
 		model.addAttribute("allMenuItems", menuService.getAllMenuItems());
-		model.addAttribute("mainMenu", menuService.getMainMenu());
-		model.addAttribute("subMealMenu", menuService.getSubMealMenu());
-		model.addAttribute("beverageMenu", menuService.getBeverageMenu());
+		model.addAttribute("mainMenu", MainMeal.getMainMenu());
+		model.addAttribute("subMealMenu", Submeal.getSubMealMenu());
+		model.addAttribute("beverageMenu", Beverage.getBeverageMenu());
 		return "meal"; // meal.html 頁面
 	}
 

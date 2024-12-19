@@ -26,7 +26,6 @@ public class CartService {
 		private String name;
 		private int amount;
 		private int price;
-		private String content;
 
 		// Constructor
 		public ItemRecord(String recordID, String itemID, String type, String name, int amount, int price,
@@ -37,7 +36,6 @@ public class CartService {
 			this.name = name;
 			this.amount = amount;
 			this.price = price;
-			this.content = content;
 		}
 
 		public void setAmount(int amount) {
@@ -72,15 +70,10 @@ public class CartService {
 			return price;
 		}
 
-		public String getContent() {
-			return content;
-		}
-
 		@Override
 		public String toString() {
 			return "ItemRecord{" + "recordID='" + recordID + '\'' + ", itemID='" + itemID + '\'' + ", type='" + type
-					+ '\'' + ", name='" + name + '\'' + ", amount=" + amount + ", price=" + price + ", content='"
-					+ content + '\'' + '}';
+					+ '\'' + ", name='" + name + '\'' + ", amount=" + amount + ", price=" + price +'}';
 		}
 
 		public void setTotalPrice(int i) {
@@ -89,12 +82,12 @@ public class CartService {
 		}
 	}
 
-	public class SetRecord {
+	public static class SetRecord {
 		private String setRecordID;
 		private MenuItem mainItem;
 		private MenuItem sideItem;
 		private MenuItem drinkItem;
-		private int amount; // 使用 amount
+		private int amount; 
 		private int price;
 
 		public SetRecord(String setRecordID, MenuItem mainItem, MenuItem sideItem, MenuItem drinkItem, int amount,
@@ -180,10 +173,10 @@ public class CartService {
 		// 找到對應的 ItemRecord
 		ItemRecord item = itemRecords.stream().filter(i -> i.getRecordID().equals(recordID)).findFirst()
 				.orElseThrow(() -> new RuntimeException("Item not found"));
-		int originalPrice = item.getPrice();
+		int unitPrice = item.getPrice() / item.getAmount();
 		item.setAmount(newAmount); // 更新數量
-		int price = item.getPrice()* item.getAmount();
-		item.setPrice(price);
+		int updatedPrice = unitPrice * newAmount;
+	    item.setPrice(updatedPrice);
 		totalPrice = getTotalPrice(); // 重新計算總價
 	}
 

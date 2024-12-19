@@ -1,11 +1,12 @@
 package com.example.demo;
 
 public class SetRecord {
-    private MenuItem mainItem;  // 主餐
-    private MenuItem sideItem;  // 副餐
-    private MenuItem drinkItem; // 饮料
-    private int price;       // 总价格
+    private MenuItem mainItem; 
+    private MenuItem sideItem; 
+    private MenuItem drinkItem; 
+    private int price;       
     private int amount;
+    private String setRecordID;
 
     public SetRecord(MenuItem mainItem, MenuItem sideItem, MenuItem drinkItem, int price) {
         this.mainItem = mainItem;

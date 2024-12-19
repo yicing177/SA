@@ -6,6 +6,7 @@ public class MenuItem {
     private String name;
     private int price;
     private String description;
+    private String content;
     
     public MenuItem(String type, String itemID, String name, int price, String description) {
         this.type = type;
@@ -13,6 +14,7 @@ public class MenuItem {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.content = content;
     }
     public String getType() {
         return type;

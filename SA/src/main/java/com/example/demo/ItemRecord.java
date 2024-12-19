@@ -3,37 +3,50 @@ package com.example.demo;
 public class ItemRecord {
 	private String recordID;
 	private String itemID;
-	private int recordPrice;
-	private int amount;
-	private String foodInfo;
-	private String content;
 	private String type;
 	private String name;
+	private int amount;
+	private int price;
 
-	public ItemRecord(String recordID, String itemID, String type, String name, int amount, double price,
-			String content) {
+	// Constructor
+	public ItemRecord(String recordID, String itemID, String type, String name, int amount, int price, String content) {
 		this.recordID = recordID;
 		this.itemID = itemID;
 		this.type = type;
 		this.name = name;
 		this.amount = amount;
-		this.recordPrice = recordPrice;
-		this.content = content;
+		this.price = price;
 	}
 
-	public void getMenuType() {
-		this.type = type;
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getRecordID() {
+		return recordID;
 	}
 
 	public String getItemID() {
 		return itemID;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public int getAmount() {
 		return amount;
 	}
 
-	public String getContent() {
-		return content;
+	public int getPrice() {
+		return price;
 	}
 }
